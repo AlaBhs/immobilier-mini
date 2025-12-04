@@ -1,4 +1,4 @@
-﻿README — Mini application **Immobilier (Stage - Développeur Fullstack)**
+README — Mini application **Immobilier (Stage - Développeur Fullstack)**
 ========================================================================
 
 > Ce README explique comment lancer le projet, présente l’architecture choisie, motive les choix, et liste les améliorations possibles si j’avais plus de temps.J’ai ajouté quelques captures d’écran (/screenshots) : accueil.png, create.png, detail.png.
@@ -15,12 +15,16 @@
 
 **Installer les dépendances (racine du repo)**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # depuis la racine du monorepo  pnpm install   `
-
+```bash
+# depuis la racine du monorepo
+pnpm install
+```
 **Lancer tous les services (dev)**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pnpm dev   `
-
+```bash
+# depuis la racine du monorepo
+pnpm dev
+```
 *   frontend (Vite/React) → par défaut http://localhost:5173
     
 *   backend (Fastify + TypeScript) → par défaut http://localhost:4000
@@ -28,11 +32,15 @@ Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQL
 
 **Lancer uniquement le backend**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pnpm --filter backend dev   `
+```bash
+pnpm --filter backend dev
+```
 
 **Lancer uniquement le frontend**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pnpm --filter frontend dev   `
+```bash
+pnpm --filter frontend dev
+```
 
 2\. API
 -------
@@ -51,19 +59,78 @@ Base : http://localhost:4000/api/items
     
 
 **Exemples curl**
+```bash
+# create
+curl -X POST http://localhost:4000/api/items \
+ -H "Content-Type: application/json" \
+ -d '{"title":"Appartement X","city":"Paris","price":123000,"surface":45}'
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # create  curl -X POST http://localhost:4000/api/items \   -H "Content-Type: application/json" \   -d '{"title":"Appartement X","city":"Paris","price":123000,"surface":45}'  # get paginated  curl "http://localhost:4000/api/items?page=1&limit=6"   `
+
+# get paginated
+curl "http://localhost:4000/api/items?page=1&limit=6"
+
+```
 
 3\. Arborescence principale
 ---------------------------
 
 **Backend (apps/backend/src)**
+```bash
+src/
+├─ index.ts                # serveur Fastify (CORS, routes)
+├─ routes/
+│   └─ items.route.ts
+├─ controllers/
+│   └─ property.controller.ts
+├─ services/
+│   └─ property/
+│       ├─ property.service.ts
+│       └─ property.service.instance.ts
+├─ repositories/
+│   └─ property/
+│       ├─ i-property.repository.ts
+│       └─ property.repository.ts
+├─ models/
+│   └─ property.model.ts
+├─ schemas/
+│   └─ property.schema.ts  # Zod validators
+├─ seeds/
+│   └─ property.seed.ts
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   src/  ├─ index.ts                # serveur Fastify (CORS, routes)  ├─ routes/  │   └─ items.route.ts  ├─ controllers/  │   └─ property.controller.ts  ├─ services/  │   └─ property/  │       ├─ property.service.ts  │       └─ property.service.instance.ts  ├─ repositories/  │   └─ property/  │       ├─ i-property.repository.ts  │       └─ property.repository.ts  ├─ models/  │   └─ property.model.ts  ├─ schemas/  │   └─ property.schema.ts  # Zod validators  ├─ seeds/  │   └─ property.seed.ts   `
+```
+
+
+
+
 
 **Frontend (apps/frontend/src)**
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   src/  ├─ main.tsx  ├─ app/  │  ├─ router.tsx  │  └─ providers.tsx        # QueryClient, etc.  ├─ pages/  │  ├─ PropertyListPage.tsx  │  ├─ PropertyDetailPage.tsx  │  └─ PropertyFormPage.tsx  ├─ modules/  │  └─ property/  │     ├─ api/property.api.ts  │     ├─ hooks/            # useProperties, useProperty, mutations  │     ├─ containers/       # smart components  │     ├─ presentations/    # pure UI (dump components)  │     └─ validators/       # Zod form schemas  ├─ components/             # atoms / molecules / organisms / templates  ├─ core/  │  └─ api/http.ts          # axios instance  ├─ models/  │  └─ property.model.ts  └─ styles/index.css   `
+```bash
+src/
+├─ main.tsx
+├─ app/
+│  ├─ router.tsx
+│  └─ providers.tsx        # QueryClient, etc.
+├─ pages/
+│  ├─ PropertyListPage.tsx
+│  ├─ PropertyDetailPage.tsx
+│  └─ PropertyFormPage.tsx
+├─ modules/
+│  └─ property/
+│     ├─ api/property.api.ts
+│     ├─ hooks/            # useProperties, useProperty, mutations
+│     ├─ containers/       # smart components
+│     ├─ presentations/    # pure UI (dump components)
+│     └─ validators/       # Zod form schemas
+├─ components/             # atoms / molecules / organisms / templates
+├─ core/
+│  └─ api/http.ts          # axios instance
+├─ models/
+│  └─ property.model.ts
+└─ styles/index.css
+
+
+```
 
 4\. Principes & patterns appliqués
 ----------------------------------
@@ -96,8 +163,8 @@ Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQL
     
 *   **Maintenabilité** : code lisible, conventions claires, moins de risques de coupling.
     
-*   **Transition facile vers prod** : remplacer stockage in-memory par DB (TypeORM/Prisma) sans changer controllers / front.
-    
+*   **Transition facile vers prod** :Remplacer le stockage in-memory par une vraie DB (TypeORM/Prisma) sans changer les controllers ni le frontend, grâce à l'abstraction du repository.
+*   **Sécurité** : Validation des données avec Zod à chaque étape (client + serveur), protection contre les injections et données malformées.
 
 6\. Ce que j’aurais ajouté avec plus de temps
 ---------------------------------------------
@@ -120,3 +187,14 @@ Priorité moyenne :
 *   Skeleton loaders, toasts, accesibilité (a11y), i18n si nécessaire.
     
 *   Front: lazy loading des modules et code-splitting.
+
+## 6. Des captures d'écrans
+
+### Accueil - Page principale avec liste des propriétés
+![Accueil](screenshots/accueil.png)
+
+### Créer - Formulaire d'ajout d'une nouvelle annonce
+![Créer](screenshots/create.png)
+
+### Détail - Vue détaillée d'une propriété
+![Détail](screenshots/detail.png)
